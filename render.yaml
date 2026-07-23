@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: imposter-backend
+    runtime: go
+    rootDir: backend
+    buildCommand: go build -o server .
+    startCommand: ./server
+    envVars:
+      - key: GOVERSION
+        value: go1.26.4
