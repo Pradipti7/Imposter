@@ -32,7 +32,7 @@ const API_BASE = import.meta.env.VITE_API_URL || '/api'
 
 function App() {
   const [game, setGame] = useState<Game | null>(null)
-  const [step, setStep] = useState<'select' | 'names' | 'waiting'>('select')
+  const [step, setStep] = useState<'landing' | 'select' | 'names' | 'waiting'>('landing')
   const [playerCount, setPlayerCount] = useState(6)
   const [playerName, setPlayerName] = useState('')
   const [playerNames, setPlayerNames] = useState<string[]>([])
@@ -239,7 +239,7 @@ function App() {
 
   const resetGame = () => {
     setGame(null)
-    setStep('select')
+    setStep('landing')
     setPlayerNames([])
     setCurrentPlayerId(null)
     setShowCard(false)
@@ -250,6 +250,101 @@ function App() {
   const getActivePlayers = () => game?.players.filter(p => !p.eliminated) || []
   const getImpostorCount = () => game?.players.filter(p => p.isImpost && !p.eliminated).length || 0
   const getVillagerCount = () => game?.players.filter(p => !p.isImpost && !p.eliminated).length || 0
+
+  // Landing page
+  if (step === 'landing') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <h1 className="text-5xl font-bold text-white mb-2">🕵️ Imposter</h1>
+            <p className="text-purple-200">A game of deception and deduction</p>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-white mb-3">Welcome!</h2>
+              <p className="text-purple-200 leading-relaxed">
+                One player is secretly the Imposter with a slightly different word.
+                Everyone else shares the same word. Discuss, question, and vote to
+                find the Imposter before they blend in too well!
+              </p>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-lg font-bold text-white mb-3 text-center">How to Play</h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                  <span className="text-2xl">👥</span>
+                  <div>
+                    <p className="text-white font-medium text-sm">Gather Players</p>
+                    <p className="text-purple-300 text-xs">4-20 players can join the game</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                  <span className="text-2xl">🃏</span>
+                  <div>
+                    <p className="text-white font-medium text-sm">View Your Card</p>
+                    <p className="text-purple-300 text-xs">Each player secretly sees their word</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                  <span className="text-2xl">💬</span>
+                  <div>
+                    <p className="text-white font-medium text-sm">Discuss & Question</p>
+                    <p className="text-purple-300 text-xs">Ask creative questions to find the Imposter</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                  <span className="text-2xl">🗳️</span>
+                  <div>
+                    <p className="text-white font-medium text-sm">Vote & Eliminate</p>
+                    <p className="text-purple-300 text-xs">Vote to eliminate one player each round</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-6 p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-400/20">
+              <h3 className="text-lg font-bold text-white mb-2 text-center">Win Conditions</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="text-green-400 font-bold">Villagers:</span>
+                  <span className="text-purple-200">Find and eliminate the Imposter</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-red-400 font-bold">Imposter:</span>
+                  <span className="text-purple-200">Survive until only one Villager remains</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-6 p-4 bg-white/5 rounded-xl">
+              <h3 className="text-lg font-bold text-white mb-2 text-center">Game Flow</h3>
+              <div className="flex items-center justify-center gap-2 text-sm text-purple-200">
+                <span className="px-2 py-1 bg-white/10 rounded">Setup</span>
+                <span>→</span>
+                <span className="px-2 py-1 bg-white/10 rounded">Reveal</span>
+                <span>→</span>
+                <span className="px-2 py-1 bg-white/10 rounded">Discuss</span>
+                <span>→</span>
+                <span className="px-2 py-1 bg-white/10 rounded">Vote</span>
+                <span>→</span>
+                <span className="px-2 py-1 bg-white/10 rounded">Result</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setStep('select')}
+              className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg text-lg"
+            >
+              🎮 Start Playing
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   // Step 1: Select player count
   if (step === 'select') {
