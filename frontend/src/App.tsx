@@ -6,6 +6,7 @@ import Button from './components/Button'
 import PlayerAvatar from './components/PlayerAvatar'
 import PlayerListItem from './components/PlayerListItem'
 import PageHeader from './components/PageHeader'
+import FadeIn from './components/FadeIn'
 
 interface Player {
   id: number
@@ -262,6 +263,7 @@ function App() {
   if (step === 'landing') {
     return (
       <PageLayout>
+        <FadeIn>
         <PageHeader title="Imposter" subtitle="A game of deception and deduction" emoji="🕵️" />
 
         <Card>
@@ -341,6 +343,7 @@ function App() {
             🎮 Start Playing
           </Button>
         </Card>
+        </FadeIn>
       </PageLayout>
     )
   }
@@ -349,6 +352,7 @@ function App() {
   if (step === 'select') {
     return (
       <PageLayout>
+        <FadeIn>
         <PageHeader title="Imposter" subtitle="Find the imposter among you!" emoji="🕵️" />
 
         <Card>
@@ -397,6 +401,7 @@ function App() {
             {loading ? 'Creating...' : '🎮 Create Game'}
           </Button>
         </Card>
+        </FadeIn>
       </PageLayout>
     )
   }
@@ -405,6 +410,7 @@ function App() {
   if (step === 'names') {
     return (
       <PageLayout>
+        <FadeIn>
         <PageHeader title="Imposter" subtitle="Enter player names" emoji="🕵️" small />
 
         <Card>
@@ -471,6 +477,7 @@ function App() {
             </Button>
           </div>
         </Card>
+        </FadeIn>
       </PageLayout>
     )
   }
@@ -484,6 +491,7 @@ function App() {
   if (game.phase === 'reveal') {
     return (
       <PageLayout>
+        <FadeIn>
         <PageHeader title="Imposter" subtitle="Card Reveal Phase" emoji="🕵️" small />
 
         <Card>
@@ -530,6 +538,7 @@ function App() {
             </div>
           )}
         </Card>
+        </FadeIn>
       </PageLayout>
     )
   }
@@ -538,6 +547,7 @@ function App() {
   if (game.phase === 'discuss') {
     return (
       <PageLayout>
+        <FadeIn>
         <PageHeader title="Imposter" subtitle="Discussion Phase" emoji="🕵️" small />
 
         <Card>
@@ -576,6 +586,7 @@ function App() {
             </p>
           </div>
         </Card>
+        </FadeIn>
       </PageLayout>
     )
   }
@@ -586,6 +597,7 @@ function App() {
 
     return (
       <PageLayout>
+        <FadeIn>
         <PageHeader title="Imposter" subtitle={`Voting Round ${(game.eliminatedIds || []).length + 1}`} emoji="🕵️" small />
 
         <Card>
@@ -644,6 +656,7 @@ function App() {
             </p>
           </div>
         </Card>
+        </FadeIn>
       </PageLayout>
     )
   }
@@ -654,6 +667,7 @@ function App() {
 
     return (
       <PageLayout>
+        <FadeIn>
         <PageHeader title="Imposter" subtitle="Elimination Result" emoji="🕵️" small />
 
         <Card>
@@ -702,6 +716,7 @@ function App() {
             {loading ? 'Continuing...' : '🗳️ Next Voting Round'}
           </Button>
         </Card>
+        </FadeIn>
       </PageLayout>
     )
   }
@@ -712,6 +727,7 @@ function App() {
 
     return (
       <PageLayout>
+        <FadeIn>
         <PageHeader title="Imposter" subtitle="Game Over" emoji="🕵️" small />
 
         <Card>
@@ -774,6 +790,7 @@ function App() {
             {loading ? 'Resetting...' : '🔄 Play Again'}
           </Button>
         </Card>
+        </FadeIn>
       </PageLayout>
     )
   }
