@@ -14,11 +14,11 @@ interface ButtonProps {
 }
 
 const variantClasses: Record<Variant, string> = {
-  green: 'from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700',
-  blue: 'from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700',
-  red: 'from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700',
-  amber: 'from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700',
-  purple: 'from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700',
+  green: 'from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 shadow-green-500/25 hover:shadow-green-500/40',
+  blue: 'from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 shadow-blue-500/25 hover:shadow-blue-500/40',
+  red: 'from-red-500 to-rose-600 hover:from-red-400 hover:to-rose-500 shadow-red-500/25 hover:shadow-red-500/40',
+  amber: 'from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 shadow-amber-500/25 hover:shadow-amber-500/40',
+  purple: 'from-purple-500 to-pink-600 hover:from-purple-400 hover:to-pink-500 shadow-purple-500/25 hover:shadow-purple-500/40',
 }
 
 export default function Button({
@@ -35,16 +35,21 @@ export default function Button({
       onClick={onClick}
       disabled={disabled || loading}
       className={`
-        py-4 bg-gradient-to-r text-white font-bold rounded-xl transition-all transform hover:scale-105
-        disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
+        py-4 bg-gradient-to-r text-white font-bold rounded-xl
+        transition-all duration-200
+        transform hover:scale-[1.03] active:scale-[0.97]
+        disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none
         shadow-lg text-lg inline-flex items-center justify-center gap-2
+        relative overflow-hidden
         ${variantClasses[variant]}
         ${fullWidth ? 'w-full' : ''}
         ${className}
       `}
     >
-      {loading && <Spinner />}
-      {children}
+      <span className="relative z-10 flex items-center gap-2">
+        {loading && <Spinner />}
+        {children}
+      </span>
     </button>
   )
 }

@@ -269,7 +269,7 @@ function App() {
         <Card>
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-3">Welcome!</h2>
-            <p className="text-purple-200 leading-relaxed">
+            <p className="text-purple-200/80 leading-relaxed">
               One player is secretly the Imposter with a slightly different word.
               Everyone else shares the same word. Discuss, question, and vote to
               find the Imposter before they blend in too well!
@@ -279,34 +279,24 @@ function App() {
           <div className="mb-6">
             <h3 className="text-lg font-bold text-white mb-3 text-center">How to Play</h3>
             <div className="space-y-3">
-              <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-                <span className="text-2xl">👥</span>
-                <div>
-                  <p className="text-white font-medium text-sm">Gather Players</p>
-                  <p className="text-purple-300 text-xs">4-20 players can join the game</p>
+              {[
+                { icon: '👥', title: 'Gather Players', desc: '4-20 players can join the game' },
+                { icon: '🃏', title: 'View Your Card', desc: 'Each player secretly sees their word' },
+                { icon: '💬', title: 'Discuss & Question', desc: 'Ask creative questions to find the Imposter' },
+                { icon: '🗳️', title: 'Vote & Eliminate', desc: 'Vote to eliminate one player each round' },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-3 p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors duration-200 animate-slide-in-right opacity-0"
+                  style={{ animationDelay: `${i * 100}ms` }}
+                >
+                  <span className="text-2xl">{item.icon}</span>
+                  <div>
+                    <p className="text-white font-medium text-sm">{item.title}</p>
+                    <p className="text-purple-300/70 text-xs">{item.desc}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-                <span className="text-2xl">🃏</span>
-                <div>
-                  <p className="text-white font-medium text-sm">View Your Card</p>
-                  <p className="text-purple-300 text-xs">Each player secretly sees their word</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-                <span className="text-2xl">💬</span>
-                <div>
-                  <p className="text-white font-medium text-sm">Discuss & Question</p>
-                  <p className="text-purple-300 text-xs">Ask creative questions to find the Imposter</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-                <span className="text-2xl">🗳️</span>
-                <div>
-                  <p className="text-white font-medium text-sm">Vote & Eliminate</p>
-                  <p className="text-purple-300 text-xs">Vote to eliminate one player each round</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -315,27 +305,26 @@ function App() {
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <span className="text-green-400 font-bold">Villagers:</span>
-                <span className="text-purple-200">Find and eliminate the Imposter</span>
+                <span className="text-purple-200/80">Find and eliminate the Imposter</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-red-400 font-bold">Imposter:</span>
-                <span className="text-purple-200">Survive until only one Villager remains</span>
+                <span className="text-purple-200/80">Survive until only one Villager remains</span>
               </div>
             </div>
           </div>
 
           <div className="mb-6 p-4 bg-white/5 rounded-xl">
-            <h3 className="text-lg font-bold text-white mb-2 text-center">Game Flow</h3>
-            <div className="flex items-center justify-center gap-2 text-sm text-purple-200">
-              <span className="px-2 py-1 bg-white/10 rounded">Setup</span>
-              <span>→</span>
-              <span className="px-2 py-1 bg-white/10 rounded">Reveal</span>
-              <span>→</span>
-              <span className="px-2 py-1 bg-white/10 rounded">Discuss</span>
-              <span>→</span>
-              <span className="px-2 py-1 bg-white/10 rounded">Vote</span>
-              <span>→</span>
-              <span className="px-2 py-1 bg-white/10 rounded">Result</span>
+            <h3 className="text-lg font-bold text-white mb-3 text-center">Game Flow</h3>
+            <div className="flex items-center justify-center gap-1.5 text-xs text-purple-200 flex-wrap">
+              {['Setup', 'Reveal', 'Discuss', 'Vote', 'Result'].map((phase, i) => (
+                <span key={phase} className="flex items-center gap-1.5">
+                  <span className="px-2.5 py-1 bg-white/10 rounded-full font-medium border border-white/5">
+                    {phase}
+                  </span>
+                  {i < 4 && <span className="text-purple-400/60">→</span>}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -360,22 +349,27 @@ function App() {
 
           <div className="text-center mb-6">
             <h2 className="text-xl font-bold text-white mb-2">How many players?</h2>
-            <p className="text-purple-200 text-sm">Choose between 4 and 20 players</p>
+            <p className="text-purple-200/70 text-sm">Choose between 4 and 20 players</p>
           </div>
 
           <div className="flex items-center justify-center gap-4 mb-8">
             <button
               onClick={() => setPlayerCount(Math.max(4, playerCount - 1))}
-              className="w-14 h-14 rounded-full bg-white/10 border border-white/30 text-white text-2xl font-bold hover:bg-white/20 transition-all"
+              className="w-14 h-14 rounded-full bg-white/10 border border-white/30 text-white text-2xl font-bold hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 shadow-lg"
             >
               -
             </button>
-            <div className="w-32 h-24 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-lg">
-              <span className="text-5xl font-bold text-white">{playerCount}</span>
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl blur opacity-50"></div>
+              <div className="relative w-32 h-24 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-xl">
+                <span className="text-5xl font-bold text-white animate-pop" key={playerCount}>
+                  {playerCount}
+                </span>
+              </div>
             </div>
             <button
               onClick={() => setPlayerCount(Math.min(20, playerCount + 1))}
-              className="w-14 h-14 rounded-full bg-white/10 border border-white/30 text-white text-2xl font-bold hover:bg-white/20 transition-all"
+              className="w-14 h-14 rounded-full bg-white/10 border border-white/30 text-white text-2xl font-bold hover:bg-white/20 hover:scale-110 active:scale-95 transition-all duration-200 shadow-lg"
             >
               +
             </button>
@@ -386,10 +380,10 @@ function App() {
               <button
                 key={num}
                 onClick={() => setPlayerCount(num)}
-                className={`py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   playerCount === num
-                    ? 'bg-pink-500 text-white scale-110'
-                    : 'bg-white/10 text-purple-200 hover:bg-white/20'
+                    ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white scale-110 shadow-lg shadow-pink-500/30'
+                    : 'bg-white/10 text-purple-200 hover:bg-white/20 hover:scale-105'
                 }`}
               >
                 {num}
@@ -429,7 +423,7 @@ function App() {
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addPlayer()}
-                className="flex-1 px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+                className="flex-1 px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-purple-300/60 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent focus:bg-white/15 transition-all duration-200"
                 disabled={playerNames.length >= playerCount}
               />
               <Button
@@ -447,12 +441,16 @@ function App() {
           {playerNames.length > 0 && (
             <div className="mb-4 max-h-60 overflow-y-auto space-y-2">
               {playerNames.map((name, index) => (
-                <div key={index} className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-lg">
-                  <PlayerAvatar name={name} />
-                  <span className="text-white flex-1">{name}</span>
+                <div
+                  key={index}
+                  className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-lg hover:bg-white/15 transition-all duration-200 animate-slide-in-right opacity-0"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <PlayerAvatar name={name} index={index} />
+                  <span className="text-white flex-1 font-medium">{name}</span>
                   <button
                     onClick={() => removePlayer(index)}
-                    className="w-6 h-6 rounded-full bg-red-500/30 text-red-300 hover:bg-red-500/50 flex items-center justify-center text-sm"
+                    className="w-6 h-6 rounded-full bg-red-500/30 text-red-300 hover:bg-red-500/60 hover:scale-110 active:scale-90 flex items-center justify-center text-sm transition-all duration-200"
                   >
                     ×
                   </button>
@@ -464,7 +462,7 @@ function App() {
           <div className="flex gap-2">
             <button
               onClick={() => { setStep('select'); setGame(null); setPlayerNames([]); }}
-              className="flex-1 py-3 bg-white/10 border border-white/30 text-white font-bold rounded-xl hover:bg-white/20 transition-all"
+              className="flex-1 py-3 bg-white/10 border border-white/30 text-white font-bold rounded-xl hover:bg-white/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
             >
               Back
             </button>
@@ -498,37 +496,37 @@ function App() {
           {error && <ErrorBanner message={error} />}
 
           <div className="text-center mb-6">
-            <p className="text-purple-200 text-sm mb-2">Current Player</p>
+            <p className="text-purple-200/70 text-sm mb-2">Current Player</p>
             <div className="flex items-center justify-center gap-3">
-              <PlayerAvatar name={currentRevealPlayer?.name || ''} size="md" />
+              <PlayerAvatar name={currentRevealPlayer?.name || ''} size="md" highlight />
               <span className="text-2xl font-bold text-white">{currentRevealPlayer?.name}</span>
             </div>
-            <p className="text-purple-300 text-sm mt-2">
+            <p className="text-purple-300/60 text-sm mt-2">
               Player {game.currentReveal + 1} of {game.players.length}
             </p>
           </div>
 
           {!showCard ? (
             <div className="space-y-4">
-              <p className="text-center text-purple-200">
+              <p className="text-center text-purple-200/80">
                 Pass the device to <span className="text-white font-bold">{currentRevealPlayer?.name}</span>
               </p>
               <Button variant="amber" onClick={viewMyCard} disabled={loading}>
-                {loading ? 'Loading...' : '🃏 Tap to View Your Card'}
+                🃏 Tap to View Your Card
               </Button>
-              <p className="text-center text-purple-400 text-xs">
+              <p className="text-center text-purple-400/50 text-xs italic">
                 Only {currentRevealPlayer?.name} should tap this button!
               </p>
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-2xl blur opacity-75"></div>
-                <div className="relative bg-gradient-to-br from-amber-100 to-orange-200 rounded-2xl p-8 text-center">
-                  <div className="text-6xl mb-4">📋</div>
+              <div className="relative animate-scale-in">
+                <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-400 rounded-2xl blur-lg opacity-60 animate-pulse"></div>
+                <div className="relative bg-gradient-to-br from-amber-50 to-orange-100 rounded-2xl p-8 text-center shadow-2xl">
+                  <div className="text-6xl mb-4 animate-bounce-in">📋</div>
                   <p className="text-amber-800 text-sm font-medium mb-2">Your word is</p>
-                  <p className="text-4xl font-bold text-amber-900">{currentWord}</p>
-                  <p className="text-amber-700 text-xs mt-3">Remember this word! Don't reveal it to others.</p>
+                  <p className="text-4xl font-bold text-amber-900 tracking-wide">{currentWord}</p>
+                  <p className="text-amber-700/70 text-xs mt-3 italic">Remember this word! Don't reveal it to others.</p>
                 </div>
               </div>
 
@@ -554,21 +552,22 @@ function App() {
           {error && <ErrorBanner message={error} />}
 
           <div className="text-center mb-6">
-            <div className="text-6xl mb-4">💬</div>
+            <div className="text-6xl mb-4 animate-bounce-in">💬</div>
             <h2 className="text-2xl font-bold text-white mb-2">Discuss!</h2>
-            <p className="text-purple-200">
+            <p className="text-purple-200/80">
               Talk with other players to figure out who the Imposter is.
               Don't reveal your word directly!
             </p>
           </div>
 
           <div className="mb-6">
-            <p className="text-purple-200 text-sm mb-3">Active Players ({getActivePlayers().length})</p>
+            <p className="text-purple-200/70 text-sm mb-3">Active Players ({getActivePlayers().length})</p>
             <div className="grid grid-cols-2 gap-2">
-              {getActivePlayers().map((p) => (
+              {getActivePlayers().map((p, i) => (
                 <PlayerListItem
                   key={p.id}
                   name={p.name}
+                  index={i}
                   highlight={p.id === currentPlayerId}
                   highlightLabel={p.id === currentPlayerId ? '(You)' : undefined}
                 />
@@ -581,7 +580,7 @@ function App() {
           </Button>
 
           <div className="mt-4 pt-4 border-t border-white/20">
-            <p className="text-purple-300 text-xs text-center">
+            <p className="text-purple-300/60 text-xs text-center italic">
               Hint: The Imposter has a similar but different word. Ask creative questions!
             </p>
           </div>
@@ -604,32 +603,32 @@ function App() {
           {error && <ErrorBanner message={error} />}
 
           <div className="text-center mb-6">
-            <div className="text-6xl mb-4">🗳️</div>
+            <div className="text-6xl mb-4 animate-bounce-in">🗳️</div>
             <h2 className="text-2xl font-bold text-white mb-2">Who is the Imposter?</h2>
-            <p className="text-purple-200 text-sm">
+            <p className="text-purple-200/80 text-sm">
               Vote to eliminate one player
             </p>
-            <p className="text-purple-300 text-xs mt-1">
+            <p className="text-purple-300/60 text-xs mt-1">
               {activePlayers.length} players remaining
             </p>
           </div>
 
           <div className="space-y-3 mb-6">
-            {activePlayers.map((p) => (
+            {activePlayers.map((p, i) => (
               <button
                 key={p.id}
                 onClick={() => setSelectedTarget(p.id)}
                 disabled={loading}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                   selectedTarget === p.id
-                    ? 'bg-red-500/40 border-2 border-red-400 scale-105'
-                    : 'bg-white/10 border border-white/20 hover:bg-white/20'
+                    ? 'bg-red-500/40 border-2 border-red-400 scale-[1.03] shadow-[0_0_20px_rgba(239,68,68,0.3)]'
+                    : 'bg-white/10 border border-white/20 hover:bg-white/15 hover:scale-[1.01]'
                 }`}
               >
-                <PlayerAvatar name={p.name} size="md" />
+                <PlayerAvatar name={p.name} size="md" index={i} />
                 <span className="text-white font-medium flex-1 text-left">{p.name}</span>
                 {selectedTarget === p.id && (
-                  <span className="text-2xl">❌</span>
+                  <span className="text-2xl animate-pop">❌</span>
                 )}
               </button>
             ))}
@@ -643,7 +642,7 @@ function App() {
               <button
                 onClick={() => setSelectedTarget(null)}
                 disabled={loading}
-                className="w-full py-3 bg-white/10 border border-white/30 text-white font-medium rounded-xl hover:bg-white/20 transition-all"
+                className="w-full py-3 bg-white/10 border border-white/30 text-white font-medium rounded-xl hover:bg-white/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
               >
                 Cancel
               </button>
@@ -651,7 +650,7 @@ function App() {
           )}
 
           <div className="mt-4 pt-4 border-t border-white/20">
-            <p className="text-purple-300 text-xs text-center">
+            <p className="text-purple-300/60 text-xs text-center italic">
               The player voted out will be eliminated. Discuss wisely!
             </p>
           </div>
@@ -674,41 +673,41 @@ function App() {
           {error && <ErrorBanner message={error} />}
 
           <div className="text-center mb-6">
-            <div className="text-6xl mb-4">👋</div>
+            <div className="text-6xl mb-4 animate-shake">👋</div>
             <h2 className="text-2xl font-bold text-white mb-2">
               {lastEliminated?.name} has been eliminated!
             </h2>
-            <p className="text-purple-200">
+            <p className="text-purple-200/80">
               They were <span className="text-green-400 font-bold">NOT</span> the Imposter
             </p>
-            <p className="text-purple-300 text-sm mt-2">
+            <p className="text-purple-300/60 text-sm mt-2">
               The Imposter is still hiding among you!
             </p>
           </div>
 
           <div className="mb-6">
-            <p className="text-purple-200 text-sm mb-3">Active Players ({getActivePlayers().length})</p>
+            <p className="text-purple-200/70 text-sm mb-3">Active Players ({getActivePlayers().length})</p>
             <div className="grid grid-cols-2 gap-2">
-              {getActivePlayers().map((p) => (
-                <PlayerListItem key={p.id} name={p.name} />
+              {getActivePlayers().map((p, i) => (
+                <PlayerListItem key={p.id} name={p.name} index={i} />
               ))}
             </div>
           </div>
 
           {(game.eliminatedIds || []).length > 0 && (
             <div className="mb-6">
-              <p className="text-purple-200 text-sm mb-3">Eliminated ({(game.eliminatedIds || []).length})</p>
+              <p className="text-purple-200/70 text-sm mb-3">Eliminated ({(game.eliminatedIds || []).length})</p>
               <div className="grid grid-cols-2 gap-2">
-                {game.players.filter(p => p.eliminated).map((p) => (
-                  <PlayerListItem key={p.id} name={p.name} dimmed />
+                {game.players.filter(p => p.eliminated).map((p, i) => (
+                  <PlayerListItem key={p.id} name={p.name} index={i} dimmed />
                 ))}
               </div>
             </div>
           )}
 
-          <div className="text-center mb-6 p-4 bg-white/5 rounded-xl">
-            <p className="text-purple-300 text-sm">
-              Remaining: {getVillagerCount()} Villagers vs {getImpostorCount()} Imposter(s)
+          <div className="text-center mb-6 p-4 bg-white/5 rounded-xl border border-white/5">
+            <p className="text-purple-300/60 text-sm">
+              Remaining: <span className="text-green-400 font-semibold">{getVillagerCount()} Villagers</span> vs <span className="text-red-400 font-semibold">{getImpostorCount()} Imposter(s)</span>
             </p>
           </div>
 
@@ -732,13 +731,15 @@ function App() {
 
         <Card>
           <div className="text-center mb-6">
-            <div className="text-7xl mb-4">
+            <div className="text-7xl mb-4 animate-bounce-in">
               {game.winner === 'villagers' ? '🎉' : '😈'}
             </div>
-            <h2 className="text-3xl font-bold text-white mb-2">
-              {game.winner === 'villagers' ? 'Villagers Win!' : 'Imposter Wins!'}
+            <h2 className="text-3xl font-bold mb-2 animate-pulse-glow">
+              <span className="bg-gradient-to-r from-white via-pink-200 to-purple-200 bg-clip-text text-transparent">
+                {game.winner === 'villagers' ? 'Villagers Win!' : 'Imposter Wins!'}
+              </span>
             </h2>
-            <p className="text-purple-200">
+            <p className="text-purple-200/80">
               {game.winner === 'villagers'
                 ? 'The Imposter has been caught!'
                 : 'The Imposter survived until the end!'}
@@ -746,25 +747,25 @@ function App() {
           </div>
 
           <div className="mb-6 p-4 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-xl border border-red-400/30">
-            <p className="text-center text-purple-200 text-sm mb-2">The Imposter was</p>
+            <p className="text-center text-purple-200/70 text-sm mb-2">The Imposter was</p>
             <div className="flex items-center justify-center gap-3">
               {impostors.map(p => (
-                <div key={p.id} className="flex items-center gap-2">
-                  <PlayerAvatar name={p.name} size="md" className="!bg-gradient-to-br !from-red-400 !to-orange-500" />
+                <div key={p.id} className="flex items-center gap-2 animate-scale-in">
+                  <PlayerAvatar name={p.name} size="md" className="!bg-gradient-to-br !from-red-400 !to-orange-500 shadow-[0_0_15px_rgba(239,68,68,0.4)]" />
                   <span className="text-white font-bold text-xl">{p.name}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="mb-6 p-6 bg-gradient-to-br from-amber-100 to-orange-200 rounded-xl">
+          <div className="mb-6 p-6 bg-gradient-to-br from-amber-100 to-orange-200 rounded-xl shadow-lg">
             <p className="text-center text-amber-800 text-sm font-medium mb-3">The Secret Words Were</p>
             <div className="flex items-center justify-center gap-4">
               <div className="text-center">
                 <p className="text-amber-700 text-xs mb-1">Villagers had</p>
                 <p className="text-3xl font-bold text-amber-900">{game.wordPair.normal}</p>
               </div>
-              <div className="text-amber-600 text-2xl">vs</div>
+              <div className="text-amber-600 text-2xl font-bold">vs</div>
               <div className="text-center">
                 <p className="text-red-600 text-xs mb-1">Imposter had</p>
                 <p className="text-3xl font-bold text-red-700">{game.wordPair.impost}</p>
@@ -773,21 +774,30 @@ function App() {
           </div>
 
           <div className="mb-6">
-            <p className="text-purple-200 text-sm mb-3">All Players</p>
+            <p className="text-purple-200/70 text-sm mb-3">All Players</p>
             <div className="space-y-2">
-              {game.players.map((p) => (
-                <div key={p.id} className={`flex items-center gap-2 px-3 py-2 rounded-lg ${p.isImpost ? 'bg-red-500/20 border border-red-400/50' : p.eliminated ? 'bg-white/5 opacity-50' : 'bg-white/10'}`}>
-                  <PlayerAvatar name={p.name} className={p.isImpost ? '!bg-gradient-to-br !from-red-400 !to-orange-500' : ''} />
-                  <span className="text-white text-sm flex-1">{p.name}</span>
-                  {p.isImpost && <span className="text-xs text-red-300">🎭 Imposter</span>}
-                  {p.eliminated && <span className="text-xs text-purple-400">Eliminated</span>}
+              {game.players.map((p, i) => (
+                <div
+                  key={p.id}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                    p.isImpost
+                      ? 'bg-red-500/20 border border-red-400/50 shadow-[0_0_10px_rgba(239,68,68,0.1)]'
+                      : p.eliminated
+                        ? 'bg-white/5 opacity-40'
+                        : 'bg-white/10 hover:bg-white/15'
+                  }`}
+                >
+                  <PlayerAvatar name={p.name} index={i} className={p.isImpost ? '!bg-gradient-to-br !from-red-400 !to-orange-500' : ''} />
+                  <span className="text-white text-sm flex-1 font-medium">{p.name}</span>
+                  {p.isImpost && <span className="text-xs text-red-300 font-semibold">🎭 Imposter</span>}
+                  {p.eliminated && <span className="text-xs text-purple-400/70">Eliminated</span>}
                 </div>
               ))}
             </div>
           </div>
 
           <Button variant="purple" onClick={resetGame} disabled={loading}>
-            {loading ? 'Resetting...' : '🔄 Play Again'}
+            🔄 Play Again
           </Button>
         </Card>
         </FadeIn>
