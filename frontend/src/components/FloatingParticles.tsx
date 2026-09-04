@@ -1,14 +1,17 @@
 import { useMemo } from 'react'
 
+const COLORS = ['bg-white', 'bg-pink-400/60', 'bg-purple-400/60', 'bg-indigo-300/40']
+
 export default function FloatingParticles() {
   const particles = useMemo(() => {
-    return Array.from({ length: 24 }, (_, i) => ({
+    return Array.from({ length: 30 }, (_, i) => ({
       id: i,
-      left: `${(i * 4.3 + 2) % 100}%`,
-      size: 2 + (i % 4),
-      duration: 8 + (i % 5) * 2,
-      delay: (i * 0.7) % 10,
-      opacity: 0.15 + (i % 3) * 0.1,
+      left: `${(i * 3.3 + 2) % 100}%`,
+      size: 2 + (i % 5) * 1.5,
+      duration: 10 + (i % 6) * 3,
+      delay: (i * 0.6) % 12,
+      opacity: 0.1 + (i % 4) * 0.08,
+      color: COLORS[i % COLORS.length],
     }))
   }, [])
 
@@ -17,7 +20,7 @@ export default function FloatingParticles() {
       {particles.map((p) => (
         <div
           key={p.id}
-          className="absolute rounded-full bg-white"
+          className={`absolute rounded-full ${p.color}`}
           style={{
             left: p.left,
             bottom: '-10px',
