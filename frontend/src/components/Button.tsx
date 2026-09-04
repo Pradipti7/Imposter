@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import Spinner from './Spinner'
 
 type Variant = 'green' | 'blue' | 'red' | 'amber' | 'purple'
 
@@ -36,12 +37,13 @@ export default function Button({
       className={`
         py-4 bg-gradient-to-r text-white font-bold rounded-xl transition-all transform hover:scale-105
         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
-        shadow-lg text-lg
+        shadow-lg text-lg inline-flex items-center justify-center gap-2
         ${variantClasses[variant]}
         ${fullWidth ? 'w-full' : ''}
         ${className}
       `}
     >
+      {loading && <Spinner />}
       {children}
     </button>
   )
